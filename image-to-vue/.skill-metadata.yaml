@@ -1,0 +1,12 @@
+name: image-to-vue
+version: 1.0.0
+description: Convert images to Vue components following unified coding standards. Use when the user wants to transform images (UI designs, icons, screenshots) into Vue components, or when mentioning image-to-code, design-to-vue, or component generation from images.
+description_zh: 按照统一编码规范将图片转换为 Vue 组件。当用户想要将图片（UI设计稿、图标、截图）转换为 Vue 组件，或提到图片转代码、设计转 Vue、从图片生成组件时使用。
+author: xian-644
+created_at: 2026-04-09
+tags:
+  - vue
+  - image
+  - component
+  - frontend
+  - code-generation
