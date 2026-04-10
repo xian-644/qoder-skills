@@ -1,72 +1,40 @@
-# i18n-mcp
+# Qoder Skills
 
-多语言翻译管理 MCP 服务，用于扫描、查找和替换项目中的 i18n 文件。
+个人 Qoder Skills 集合仓库。
 
-## 功能
+## Skills 列表
 
-- **scan_i18n_files** - 扫描项目中的语言文件
-- **find_key_by_text** - 根据中文文本查找 key
-- **replace_translation** - 替换指定 key 的翻译
-- **add_new_key** - 添加新的翻译 key
+| Skill | 描述 |
+|-------|------|
+| **git-commit-workflow** | Git 提交工作流助手，自动化规范提交流程 |
+| **image-to-vue** | 将图片转换为 Vue 组件，支持组件选择优先级和灵活布局规则 |
 
-## 安装
-
-```bash
-npm install
-```
-
-## 使用
-
-### 在 Qoder 中配置
-
-在 `~/.qoderwork/mcp.json` 中添加：
-
-```json
-{
-  "mcpServers": {
-    "i18n": {
-      "command": "node",
-      "args": ["C:/Users/maccura/.qoderwork/workspace/mns8a0zw8eqcthdh/i18n-mcp/index.js"]
-    }
-  }
-}
-```
-
-### 使用示例
-
-1. 扫描项目语言文件：
-   ```
-   扫描 /path/to/project 的 i18n 文件
-   ```
-
-2. 根据中文查找 key：
-   ```
-   查找包含"提交"的 key
-   ```
-
-3. 替换翻译：
-   ```
-   把 common.button.submit 的英文改成 "Confirm"
-   ```
-
-4. 添加新 key：
-   ```
-   添加新 key common.button.cancel，中文"取消"，英文"Cancel"
-   ```
-
-## 支持的目录结构
+## 目录结构
 
 ```
-project/
-├── src/i18n/
-│   ├── zh.json
-│   └── en.json
-├── src/locales/
-│   ├── zh/
-│   │   └── common.json
-│   └── en/
-│       └── common.json
-└── public/locales/
-    ├── zh/
-    └── en/
+.
+├── git-commit-workflow/
+│   └── SKILL.md
+├── image-to-vue/
+│   ├── .skill-metadata.yaml
+│   └── SKILL.md
+└── README.md
 ```
+
+## 使用方式
+
+在 Qoder 中通过 skill 名称调用：
+
+```
+使用 git-commit-workflow 帮我提交代码
+使用 image-to-vue 将这张图片转成 Vue 组件
+```
+
+## 添加新 Skill
+
+1. 在本地创建新的 skill 文件夹
+2. 编写 SKILL.md 文件
+3. 推送到此仓库
+
+---
+*Generated with [Qoder](https://qoder.com)*
