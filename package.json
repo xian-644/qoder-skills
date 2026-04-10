@@ -1,0 +1,20 @@
+{
+  "name": "i18n-mcp",
+  "version": "1.0.0",
+  "description": "MCP service for i18n translation management",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "i18n-mcp": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": ["mcp", "i18n", "translation"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.0"
+  }
+}
