@@ -1,8 +1,8 @@
 ---
 name: image-to-vue
-version: 1.0.0
-description: Convert images to Vue components following unified coding standards. Use when the user wants to transform images (UI designs, icons, screenshots) into Vue components, or when mentioning image-to-code, design-to-vue, or component generation from images.
-description_zh: 按照统一编码规范将图片转换为 Vue 组件。当用户想要将图片（UI设计稿、图标、截图）转换为 Vue 组件，或提到图片转代码、设计转 Vue、从图片生成组件时使用。
+version: 1.0.1
+description: Convert images to Vue components following unified coding standards. Use when the user wants to transform images (UI designs, icons, screenshots) into Vue components, or when mentioning image-to-code, design-to-vue, component generation from images, or phrases like "complete page according to image", "implement based on image", "develop according to design".
+description_zh: 按照统一编码规范将图片转换为 Vue 组件。当用户想要将图片（UI设计稿、图标、截图）转换为 Vue 组件，或提到图片转代码、设计转 Vue、从图片生成组件，以及"按照图片完成页面"、"根据图片实现"、"参考图片开发"等类似需求时使用。
 ---
 
 # Image to Vue Component
@@ -11,10 +11,25 @@ Convert images into well-structured Vue 3 components following unified coding st
 
 ## When to Use
 
+**ALWAYS use this skill when:**
+- User provides images/screenshots and asks to "complete page", "implement page", "develop according to image"
+- User says phrases like "按照图片完成", "根据图片实现", "参考图片开发", "按图实现"
 - Converting UI design mockups to Vue components
 - Transforming icons or images into reusable components
 - Recreating page layouts from screenshots or design files
 - Generating Vue code from visual references
+
+**Trigger phrases (关键词):**
+- "按照图片完成页面"
+- "根据图片实现"
+- "参考图片开发"
+- "按设计图开发"
+- "图片转代码"
+- "设计转 Vue"
+- "根据截图实现"
+- "complete page according to image"
+- "implement based on image"
+- "develop according to design"
 
 ## Output Standards
 
@@ -81,29 +96,44 @@ const props = defineProps({
 
 ## Conversion Workflow
 
-### Step 0: Check Existing Components (Priority 1)
+### Step 0: Check Existing Components and Styles (Priority 1)
 
-Before creating a new component, always check for existing solutions:
+**CRITICAL: Always reference existing project components for consistent styling**
+
+Before creating a new component:
 
 1. **Search project for similar components**
    - Look for components with similar functionality or structure
    - Check `components/` or `src/components/` directories
-   - Search by component type: card, button, modal, etc.
-   - If found: reuse or extend the existing component
+   - Check `src/views/` for page-level components
+   - Search by component type: card, button, modal, table, form, etc.
+   - **If found: carefully copy the styling patterns (padding, margin, font sizes, colors)**
 
-2. **Check Element Plus library (Priority 2)**
+2. **Reference existing page components for styling standards:**
+   - Check `src/views/rulebook/rule/ruleList.vue` for table page patterns
+   - Check `src/views/application/project/index.vue` for list page patterns
+   - Check `src/views/operationLog.vue` for search + table patterns
+   - **Pay special attention to:**
+     - Container padding (check if it has padding or not)
+     - Search area layout and spacing (copy exact values)
+     - Table height calculation (copy from existing tables)
+     - Button styles and icon usage (copy exact patterns)
+     - Form label positioning (copy from existing forms)
+
+3. **Check Element Plus library (Priority 2)**
    - Review Element Plus components that match the need
    - Prefer composing existing El-* components over custom implementation
    - Common components to check:
      - Layout: `el-row`, `el-col`, `el-container`
-     - Data Display: `el-card`, `el-descriptions`, `el-empty`
-     - Form: `el-button`, `el-input`, `el-select`
+     - Data Display: `el-card`, `el-descriptions`, `el-empty`, `el-table`
+     - Form: `el-button`, `el-input`, `el-select`, `el-form`
      - Navigation: `el-menu`, `el-tabs`, `el-breadcrumb`
      - Feedback: `el-dialog`, `el-drawer`, `el-tooltip`
 
-3. **Create custom component (Priority 3)**
+4. **Create custom component (Priority 3)**
    - Only when no existing solution meets the need
    - Follow the layout and styling guidelines below
+   - **MUST maintain consistency with existing project styles**
 
 ### Step 1: Analyze the Image
 
@@ -391,6 +421,55 @@ const handleReset = () => {
 </style>
 ```
 
+## Project-Specific Styling Guidelines
+
+### CRITICAL: Reference Existing Project Components
+
+**MUST read existing components before writing any styles. DO NOT assume standard values.**
+
+#### Step 1: Find Reference Components
+Search for similar components in the project:
+```
+src/views/**/*.vue
+src/components/**/*.vue
+```
+
+#### Step 2: Copy Exact Styling Patterns
+For each aspect of your component, find an existing equivalent and copy its styles:
+
+**Container Styles:**
+- Find: Look at `.rule-list-container`, `.project-list-container` in existing pages
+- Copy: Note whether they have `padding`, `background`, `border-radius`
+- **DO NOT assume** - some have padding, some don't
+
+**Search Area Layout:**
+- Find: Look at `.search-area`, `.search-row`, `.search-item` classes
+- Copy: Exact `margin`, `gap`, `display` values
+- **DO NOT assume** - spacing varies by page
+
+**Table Configuration:**
+- Find: Look at existing `<mk-table>` or `<el-table>` usage
+- Copy: `height` calculation, column `width` settings
+- **DO NOT assume** - height calculation may differ
+
+**Form Styles:**
+- Find: Look at existing `<el-form>` usage
+- Copy: `label-position`, `label-width`, item spacing
+- **DO NOT assume** - some use `top`, some use `right`
+
+**Button Styles:**
+- Find: Look at existing `<el-button>` usage
+- Copy: Icon placement, class names, spacing
+- **DO NOT assume** - icon classes may vary
+
+**Typography:**
+- Find: Look at `.label`, `.title`, `.text` classes
+- Copy: Exact `font-size`, `color`, `font-weight`
+- **DO NOT assume** - always use existing values
+
+#### Step 3: Apply Consistently
+Once you've identified the patterns from existing components, apply them exactly to your new component.
+
 ## Layout Principles
 
 ### Flexible Layout (No Fixed Dimensions)
@@ -638,12 +717,13 @@ For repeated patterns:
 - Implement `v-memo` for list items
 - Lazy load heavy components
 
-## Validation Checklist
+### Validation Checklist
 
 Before finalizing the component:
 
 ### Component Selection
 - [ ] Checked for existing similar components in the project
+- [ ] **Referenced existing project components for styling patterns (padding, margin, fonts)**
 - [ ] Considered Element Plus components before custom implementation
 - [ ] Only created custom component when necessary
 
@@ -662,6 +742,15 @@ Before finalizing the component:
 - [ ] No absolute positioning (use flexbox or grid instead)
 - [ ] Layout is responsive and adapts to container
 - [ ] Uses relative units (`%`, `rem`, `em`) for sizing
+
+### Project Consistency
+- [ ] **Read at least 2-3 existing similar components before writing styles**
+- [ ] **Container padding copied from existing components (do not assume)**
+- [ ] **Table height copied from existing table components**
+- [ ] **Search area layout matches existing search patterns**
+- [ ] **Font sizes and colors copied exactly from existing components**
+- [ ] **Form labels positioned same as other forms in project**
+- [ ] **Spacing values (margin, gap, padding) copied from reference components**
 
 ## Anti-Patterns to Avoid
 
